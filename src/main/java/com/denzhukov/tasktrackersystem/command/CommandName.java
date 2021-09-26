@@ -1,9 +1,9 @@
 package com.denzhukov.tasktrackersystem.command;
 
 public enum CommandName {
-    SHOW_USERS("showUsers"),
-    ADD_USER("addUser"),
-    DELETE_USER("deleteUser"),
+    SHOW("show"),
+    ADD("add"),
+    DELETE("delete"),
     HELP("help"),
     EXIT("exit");
 

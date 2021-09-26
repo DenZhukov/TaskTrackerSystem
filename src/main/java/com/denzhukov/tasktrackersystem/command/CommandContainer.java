@@ -1,5 +1,6 @@
 package com.denzhukov.tasktrackersystem.command;
 
+import com.denzhukov.tasktrackersystem.controller.ProjectController;
 import com.denzhukov.tasktrackersystem.controller.UserController;
 import org.springframework.stereotype.Component;
 
@@ -13,11 +14,11 @@ public class CommandContainer {
     private final Command unknownCommand;
     private final Map<String, Command> commandMap;
 
-    public CommandContainer(UserController userController) {
+    public CommandContainer(UserController userController, ProjectController projectController) {
         commandMap = new HashMap<String, Command>();
-        commandMap.put(SHOW_USERS.getCommandName(), new ShowUsersCommand(userController));
-        commandMap.put(ADD_USER.getCommandName(), new AddUserCommand(userController));
-        commandMap.put(DELETE_USER.getCommandName(), new DeleteUserCommand(userController));
+        commandMap.put(SHOW.getCommandName(), new ShowCommand(userController, projectController));
+        commandMap.put(ADD.getCommandName(), new AddCommand(userController, projectController));
+        commandMap.put(DELETE.getCommandName(), new DeleteCommand(userController, projectController));
 
         unknownCommand = new UnknownCommand();
     }
