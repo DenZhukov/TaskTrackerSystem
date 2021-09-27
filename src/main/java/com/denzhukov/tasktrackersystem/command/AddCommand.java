@@ -6,6 +6,8 @@ import com.denzhukov.tasktrackersystem.controller.UserController;
 import com.denzhukov.tasktrackersystem.repository.entity.Project;
 import com.denzhukov.tasktrackersystem.repository.entity.User;
 
+import java.util.Scanner;
+
 import static com.denzhukov.tasktrackersystem.command.CommandName.ADD;
 import static com.denzhukov.tasktrackersystem.console.Subject.*;
 
@@ -71,5 +73,23 @@ public class AddCommand implements Command {
     private void addTask(String[] commandArray) {
         taskController.create(commandArray);
         System.out.printf(ADD_SUCCESS, TASK.getSubject());
+
+        System.out.println("Do you want choose executor now? Y/N");
+        Scanner scanner = new Scanner(System.in);
+        String answer = scanner.nextLine();
+        if(answer.equalsIgnoreCase("Y")) {
+            AssignCommand assignCommand = new AssignCommand(userController, projectController, taskController);
+            boolean flag = true;
+            while (flag) {
+                System.out.println("Assign executor!");
+                String assign = scanner.nextLine();
+                if (assign.equalsIgnoreCase("exit"))
+                    flag = false;
+
+                //TODO LOOP!
+            }
+        } else System.out.println("You can do it later.");
+
+
     }
 }

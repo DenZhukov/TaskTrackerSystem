@@ -6,11 +6,12 @@ import lombok.EqualsAndHashCode;
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 
 @Data
 @Entity
 @Table(name = "Users")
-@EqualsAndHashCode(exclude = "tasksHolder")
+@EqualsAndHashCode(exclude = {"tasksHolder", "tasksExecutor", "projects"})
 public class User {
 
     @Id
@@ -28,6 +29,9 @@ public class User {
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "userExecutor")
     private Collection<Task> tasksExecutor;
+
+    @ManyToMany(mappedBy = "users", fetch = FetchType.EAGER)
+    List<Project> projects;
 
     @Override
     public String toString() {

@@ -20,6 +20,7 @@ public class CommandContainer {
         commandMap.put(SHOW.getCommandName(), new ShowCommand(userController, projectController, taskController));
         commandMap.put(ADD.getCommandName(), new AddCommand(userController, projectController, taskController));
         commandMap.put(DELETE.getCommandName(), new DeleteCommand(userController, projectController, taskController));
+        commandMap.put(ASSIGN.getCommandName(), new AssignCommand(userController, projectController, taskController));
 
         unknownCommand = new UnknownCommand();
     }
