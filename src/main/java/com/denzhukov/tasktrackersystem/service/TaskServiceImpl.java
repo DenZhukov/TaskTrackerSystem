@@ -4,6 +4,7 @@ import com.denzhukov.tasktrackersystem.repository.TaskRepository;
 import com.denzhukov.tasktrackersystem.repository.entity.Project;
 import com.denzhukov.tasktrackersystem.repository.entity.Task;
 import com.denzhukov.tasktrackersystem.repository.entity.User;
+import com.pi4j.util.ConsoleColor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,25 +28,24 @@ public class TaskServiceImpl implements TaskService{
     }
 
     @Override
-    public void create(String[] commandArray) {
+    public void create(String taskName, String fistNameUser, String lastNameUser, String projectName) {
         User userHolder = userService.show().stream()
-                .filter(user -> user.getFirstName().equalsIgnoreCase(commandArray[3])
-                        && user.getLastName().equalsIgnoreCase(commandArray[4]))
+                .filter(user -> (user.getFirstName() + " " + user.getLastName()).equalsIgnoreCase(fistNameUser + " " + lastNameUser))
                 .findAny().orElse(null);
         Project project = projectService.show().stream()
-                .filter(project1 -> project1.getName().equalsIgnoreCase(commandArray[5]))
+                .filter(project1 -> project1.getName().equalsIgnoreCase(projectName))
                 .findAny().orElse(null);
         if (userHolder != null && project != null) {
-        Task task = new Task();
-        task.setId(setTaskID());
-        task.setName(commandArray[2]);
-        task.setUserHolder(userHolder);
-        task.setProject(project);
-        project.addTask(task);
-        userHolder.addTaskHolder(task);
-        taskRepository.save(task);
-        } else System.out.println("User or Project don't exist, please check list of users or project " +
-                "(command \"show users(project)\").");
+            Task task = new Task();
+            task.setId(setTaskID());
+            task.setName(taskName);
+            task.setUserHolder(userHolder);
+            task.setProject(project);
+            project.addTask(task);
+            userHolder.addTaskHolder(task);
+            taskRepository.save(task);
+        } else System.out.println(ConsoleColor.RED + "User or Project don't exist, please check list of users or project " +
+                "(command \"show users(project)\")." + ConsoleColor.RESET);
     }
 
     @Override

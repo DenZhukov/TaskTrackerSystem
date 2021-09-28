@@ -16,11 +16,12 @@ public class CommandContainer {
     private final Map<String, Command> commandMap;
 
     public CommandContainer(UserController userController, ProjectController projectController, TaskController taskController) {
-        commandMap = new HashMap<String, Command>();
+        commandMap = new HashMap<>();
         commandMap.put(SHOW.getCommandName(), new ShowCommand(userController, projectController, taskController));
         commandMap.put(ADD.getCommandName(), new AddCommand(userController, projectController, taskController));
         commandMap.put(DELETE.getCommandName(), new DeleteCommand(userController, projectController, taskController));
         commandMap.put(ASSIGN.getCommandName(), new AssignCommand(userController, projectController, taskController));
+        commandMap.put(REPORT.getCommandName(), new ReportCommand(userController, projectController, taskController));
 
         unknownCommand = new UnknownCommand();
     }

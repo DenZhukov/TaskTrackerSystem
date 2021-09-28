@@ -1,0 +1,23 @@
+user,Denis,Zhukov
+user,Anna,Ivanova
+user,Ivan,Ivanov
+user,Elena,Stepanova
+
+project,TrackerSystem
+project,AnalysisSystem
+project,AccountSystem
+
+task,POC,Anna Ivanova,TrackerSystem
+task,Prototype,Anna Ivanova,TrackerSystem
+task,MVP,Anna Ivanova,TrackerSystem
+task,Test,Anna Ivanova,TrackerSystem
+
+task,POC,Ivan Ivanov,AnalysisSystem
+task,Prototype,Ivan Ivanov,AnalysisSystem
+task,MVP,Ivan Ivanov,AnalysisSystem
+task,Test,Ivan Ivanov,AnalysisSystem
+
+task,POC,Denis Zhukov,AccountSystem
+task,Prototype,Denis Zhukov,AccountSystem
+task,MVP,Denis Zhukov,AccountSystem
+task,Test,Denis Zhukov,AccountSystem

@@ -1,77 +1,48 @@
 package com.denzhukov.tasktrackersystem.console;
 
 import com.denzhukov.tasktrackersystem.command.CommandContainer;
-import com.denzhukov.tasktrackersystem.repository.ProjectRepository;
-import com.denzhukov.tasktrackersystem.repository.TaskRepository;
-import com.denzhukov.tasktrackersystem.repository.UserRepository;
-import com.denzhukov.tasktrackersystem.repository.entity.Project;
-import com.denzhukov.tasktrackersystem.repository.entity.Task;
-import com.denzhukov.tasktrackersystem.repository.entity.User;
+import com.denzhukov.tasktrackersystem.controller.ProjectController;
+import com.denzhukov.tasktrackersystem.controller.TaskController;
+import com.denzhukov.tasktrackersystem.controller.UserController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
+import com.pi4j.util.ConsoleColor;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
 import static com.denzhukov.tasktrackersystem.command.CommandName.EXIT;
+import static com.denzhukov.tasktrackersystem.console.Messages.WELCOME;
 
 @Component
 public class ConsoleRunner implements CommandLineRunner {
 
     private final CommandContainer commandContainer;
-    private final UserRepository userRepository;
-    private final ProjectRepository projectRepository;
-    private final TaskRepository taskRepository;
+    private final UserController userController;
+    private final ProjectController projectController;
+    private final TaskController taskController;
 
     @Autowired
-    public ConsoleRunner(CommandContainer commandContainer, UserRepository userRepository,
-                         ProjectRepository projectRepository, TaskRepository taskRepository) {
+    public ConsoleRunner(CommandContainer commandContainer, UserController userController,
+                         ProjectController projectController, TaskController taskController) {
         this.commandContainer = commandContainer;
-        this.userRepository = userRepository;
-        this.projectRepository = projectRepository;
-        this.taskRepository = taskRepository;
+        this.userController = userController;
+        this.projectController = projectController;
+        this.taskController = taskController;
     }
 
     @Override
     public void run(String... args) throws Exception {
+        InputStart input = new InputStart(userController, projectController, taskController);
+        input.start();
 
-        long count = userRepository.count();
-        if(count == 0) {
-            User user1 = new User();
-            user1.setFirstName("Den");
-            user1.setLastName("Zhukov");
-            userRepository.save(user1);
+        System.out.println(WELCOME.getMessage());
+        System.out.println("You can create users, projects and tasks. Assign users to projects and tasks.\nAnd much more!" +
+               " Write " + ConsoleColor.GREEN +"help" + ConsoleColor.RESET +" if you want to know more!");
 
-            User user2 = new User();
-            user2.setFirstName("Ann");
-            user2.setLastName("Ivanova");
-            userRepository.save(user2);
 
-            Project project = new Project();
-            project.setName("Tracker");
-            projectRepository.save(project);
-
-            Task task = new Task();
-            task.setId(1);
-            task.setName("First");
-            task.setUserHolder(user1);
-            user1.addTaskHolder(task);
-            task.setProject(project);
-            project.addTask(task);
-            taskRepository.save(task);
-
-            Task task2 = new Task();
-            task2.setId(2);
-            task2.setName("Second");
-            task2.setUserHolder(user1);
-            user1.addTaskHolder(task2);
-            task2.setProject(project);
-            project.addTask(task2);
-            taskRepository.save(task2);
-
-        }
         try(BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
             String command = "";
             while (!command.equalsIgnoreCase(EXIT.getCommandName())) {

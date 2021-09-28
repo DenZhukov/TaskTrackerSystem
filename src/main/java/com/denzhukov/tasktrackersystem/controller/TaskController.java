@@ -22,7 +22,8 @@ public class TaskController {
         taskService.create(task);
     }
 
-    public void create(String[] commandArray) { taskService.create(commandArray); }
+    public void create(String taskName, String fistNameUser, String lastNameUser, String projectName) {
+        taskService.create(taskName, fistNameUser, lastNameUser, projectName); }
 
     public void delete(Task task) {
         taskService.delete(task);

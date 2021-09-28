@@ -23,6 +23,10 @@ public class ProjectController {
         projectService.create(project);
     }
 
+    public boolean create(String nameProject) {
+        return projectService.create(nameProject);
+    }
+
     public void delete(Project project) {
         projectService.delete(project);
     }

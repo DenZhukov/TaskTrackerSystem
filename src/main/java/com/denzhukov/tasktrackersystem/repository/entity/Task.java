@@ -10,6 +10,7 @@ import javax.persistence.*;
 public class Task {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(name = "name")
@@ -29,7 +30,7 @@ public class Task {
 
     @Override
     public String toString() {
-        return id + ". " + name + " User Holder:" + userHolder.getFirstName() + " " + userHolder.getLastName()
+        return id + ". " + name + " User Holder:" + checkHolder()
                 + " Project:" + project.getName() + " Executor:" + checkExecutor();
     }
 
@@ -37,5 +38,11 @@ public class Task {
         if (userExecutor != null)
             return userExecutor.getFirstName() + " " + userExecutor.getLastName();
         return "Executor has not been appointed yet";
+    }
+
+    private String checkHolder() {
+        if (userHolder != null)
+            return userHolder.getFirstName() + " " + userHolder.getLastName();
+        return "Holder has not been appointed yet";
     }
 }

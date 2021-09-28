@@ -19,7 +19,7 @@ public class Project {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "name")
+    @Column(name = "name", unique = true)
     private String name;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "project")

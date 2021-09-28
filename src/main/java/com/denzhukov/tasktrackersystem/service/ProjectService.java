@@ -7,6 +7,8 @@ import java.util.List;
 public interface ProjectService {
     void create(Project project);
 
+    boolean create(String nameProject);
+
     void delete(Project project);
 
     List<Project> show();

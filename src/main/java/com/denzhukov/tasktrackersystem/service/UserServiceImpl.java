@@ -23,6 +23,14 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
+    public void create(String firstName, String lastName) {
+        User user = new User();
+        user.setFirstName(firstName);
+        user.setLastName(lastName);
+        userRepository.save(user);
+    }
+
+    @Override
     public void delete(User user) {
         userRepository.delete(user);
     }

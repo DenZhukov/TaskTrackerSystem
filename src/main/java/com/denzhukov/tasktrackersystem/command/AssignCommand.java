@@ -17,8 +17,10 @@ public class AssignCommand implements Command{
     private final ProjectController projectController;
 
     private final static String ASSIGN_MESSAGE = "Please, write full command";
-    private final static String ASSIGN_TASK_MISTAKE = "Full assign user on the task command must consist of name task, first and last executor name" +
+    private final static String ASSIGN_TASK_MISTAKE = "Assign user on the task command must consist of name task, project name, first and last executor name" +
              "\nExample: assign task TaskName Ivan Ivanov";
+    private final static String ASSIGN_PROJECT_MISTAKE = "Assign user on the project command must consist of name project, first and last executor name" +
+            "\nExample: assign project ProjectName Ivan Ivanov";
 
 
     public AssignCommand(UserController userController, ProjectController projectController, TaskController taskController) {
@@ -39,20 +41,23 @@ public class AssignCommand implements Command{
 
     private void chooseObject(String[] commandArray) {
        if (commandArray[1].equalsIgnoreCase(PROJECT.getSubject())) {
-            assignProject(commandArray);
-        } else if (commandArray[1].equalsIgnoreCase(TASK.getSubject())) {
-           if (commandArray.length > 3)
-                assignTask(commandArray);
-           else System.out.println(ASSIGN_TASK_MISTAKE);
-        } else System.out.println("Subject is not found");
+           if (commandArray.length == 5) {
+               assignProject(commandArray);
+           } else System.out.println(ASSIGN_PROJECT_MISTAKE);
+       } else if (commandArray[1].equalsIgnoreCase(TASK.getSubject())) {
+           if (commandArray.length == 6) {
+               assignTask(commandArray);
+           } else System.out.println(ASSIGN_TASK_MISTAKE);
+       } else System.out.println("Subject is not found");
     }
 //TODO REFACTOR
     private void assignTask(String[] arrayTask) {
         Task task = taskController.showTask().stream()
-                .filter(task1 -> task1.getName().equalsIgnoreCase(arrayTask[2]))
+                .filter(task1 -> task1.getName().equalsIgnoreCase(arrayTask[2]) &&
+                        task1.getProject().getName().equalsIgnoreCase(arrayTask[3]))
                 .findFirst().orElse(null);
         User user = userController.showUsers().stream()
-                .filter(user1 -> user1.getFirstName().equalsIgnoreCase(arrayTask[3]) && user1.getLastName().equalsIgnoreCase(arrayTask[4]))
+                .filter(user1 -> user1.getFirstName().equalsIgnoreCase(arrayTask[4]) && user1.getLastName().equalsIgnoreCase(arrayTask[5]))
                 .findFirst().orElse(null);
         if (task != null && user != null) {
             task.setUserExecutor(user);

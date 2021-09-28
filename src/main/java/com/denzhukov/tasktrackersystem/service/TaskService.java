@@ -7,7 +7,7 @@ import java.util.List;
 public interface TaskService {
     void create(Task task);
 
-    void create(String[] message);
+    void create(String taskName, String fistNameUser, String lastNameUser, String projectName);
 
     void delete(Task task);
 

@@ -5,6 +5,7 @@ public enum CommandName {
     ADD("add"),
     DELETE("delete"),
     ASSIGN("assign"),
+    REPORT("report"),
     HELP("help"),
     EXIT("exit");
 
