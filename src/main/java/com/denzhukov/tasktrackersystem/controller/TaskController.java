@@ -29,4 +29,8 @@ public class TaskController {
         taskService.delete(task);
     }
 
+    public Task findTask(String taskName, String projectName) {
+        return taskService.findTask(taskName, projectName);
+    }
+
 }

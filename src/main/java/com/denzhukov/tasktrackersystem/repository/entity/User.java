@@ -11,7 +11,7 @@ import java.util.List;
 @Data
 @Entity
 @Table(name = "Users")
-@EqualsAndHashCode(exclude = {"tasksHolder", "tasksExecutor", "projects"})
+@EqualsAndHashCode(exclude = {"tasksExecutor", "projects"})
 public class User {
 
     @Id
@@ -24,9 +24,6 @@ public class User {
     @Column(name = "last_name")
     private String lastName;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "userHolder")
-    private Collection<Task> tasksHolder;
-
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "userExecutor")
     private Collection<Task> tasksExecutor;
 
@@ -36,13 +33,6 @@ public class User {
     @Override
     public String toString() {
         return id + ". " + firstName + " " + lastName;
-    }
-
-    public void addTaskHolder(Task task) {
-        if (tasksHolder == null) {
-            tasksHolder = new HashSet<>();
-        }
-        tasksHolder.add(task);
     }
 
     public void addTaskExecutor(Task task) {

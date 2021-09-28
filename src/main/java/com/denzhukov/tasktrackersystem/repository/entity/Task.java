@@ -1,6 +1,8 @@
 package com.denzhukov.tasktrackersystem.repository.entity;
 
 import lombok.Data;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 
@@ -17,21 +19,19 @@ public class Task {
     private String name;
 
     @ManyToOne (fetch=FetchType.EAGER)
-    @JoinColumn(name = "userHolder")
-    private User userHolder;
-
-    @ManyToOne (fetch=FetchType.EAGER)
     @JoinColumn(name = "userExecutor")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private User userExecutor;
 
     @ManyToOne (fetch=FetchType.EAGER)
     @JoinColumn(name = "project")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Project project;
 
     @Override
     public String toString() {
-        return id + ". " + name + " User Holder:" + checkHolder()
-                + " Project:" + project.getName() + " Executor:" + checkExecutor();
+        return id + ". " + name +
+                 " Project:" + project.getName() + " Executor:" + checkExecutor();
     }
 
     private String checkExecutor() {
@@ -40,9 +40,4 @@ public class Task {
         return "Executor has not been appointed yet";
     }
 
-    private String checkHolder() {
-        if (userHolder != null)
-            return userHolder.getFirstName() + " " + userHolder.getLastName();
-        return "Holder has not been appointed yet";
-    }
 }

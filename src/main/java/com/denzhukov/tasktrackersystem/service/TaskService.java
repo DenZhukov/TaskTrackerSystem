@@ -12,4 +12,6 @@ public interface TaskService {
     void delete(Task task);
 
     List<Task> show();
+
+    Task findTask(String taskName, String projectName);
 }

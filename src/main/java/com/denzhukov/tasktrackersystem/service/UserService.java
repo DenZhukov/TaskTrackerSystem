@@ -12,4 +12,6 @@ public interface UserService {
     void delete(User user);
 
     List<User> show();
+
+    User findUser(String firstName, String lastName);
 }

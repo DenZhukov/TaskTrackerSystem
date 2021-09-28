@@ -22,7 +22,7 @@ public class CommandContainer {
         commandMap.put(DELETE.getCommandName(), new DeleteCommand(userController, projectController, taskController));
         commandMap.put(ASSIGN.getCommandName(), new AssignCommand(userController, projectController, taskController));
         commandMap.put(REPORT.getCommandName(), new ReportCommand(userController, projectController, taskController));
-
+        commandMap.put(HELP.getCommandName(), new HelpCommand());
         unknownCommand = new UnknownCommand();
     }
 

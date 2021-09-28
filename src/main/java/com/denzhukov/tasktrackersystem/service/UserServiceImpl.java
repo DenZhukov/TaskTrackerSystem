@@ -23,6 +23,13 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
+    public User findUser(String firstName, String lastName) {
+        return show().stream()
+                .filter(user1 -> user1.getFirstName().equalsIgnoreCase(firstName) && user1.getLastName().equalsIgnoreCase(lastName))
+                .findFirst().orElse(null);
+    }
+
+    @Override
     public void create(String firstName, String lastName) {
         User user = new User();
         user.setFirstName(firstName);

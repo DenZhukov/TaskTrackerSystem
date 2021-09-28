@@ -24,6 +24,13 @@ public class ProjectServiceImpl implements ProjectService{
     }
 
     @Override
+    public Project findProject(String nameProject) {
+        return  show().stream()
+                .filter(project1 -> project1.getName().equalsIgnoreCase(nameProject))
+                .findFirst().orElse(null);
+    }
+
+    @Override
     public boolean create(String nameProject) {
         if (show().stream().noneMatch(project -> project.getName().equalsIgnoreCase(nameProject))) {
             Project project = new Project();

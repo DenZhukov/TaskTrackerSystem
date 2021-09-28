@@ -23,6 +23,10 @@ public class ProjectController {
         projectService.create(project);
     }
 
+    public Project findProject(String projectName) {
+        return projectService.findProject(projectName);
+    }
+
     public boolean create(String nameProject) {
         return projectService.create(nameProject);
     }

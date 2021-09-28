@@ -7,6 +7,7 @@ import com.pi4j.util.ConsoleColor;
 
 import static com.denzhukov.tasktrackersystem.command.CommandName.ADD;
 import static com.denzhukov.tasktrackersystem.console.Messages.FULL_COMMAND;
+import static com.denzhukov.tasktrackersystem.console.Messages.NOT_FOUND1;
 import static com.denzhukov.tasktrackersystem.console.Subject.*;
 
 public class AddCommand implements Command {
@@ -18,7 +19,7 @@ public class AddCommand implements Command {
             "\nExample: add user Ivan Ivanov" + ConsoleColor.RESET;
     private final static String ADD_USER_PROJECT = ConsoleColor.RED + "Mistake. Project's name must consist of name." +
             "\nExample: add project Tracker" + ConsoleColor.RESET;
-    private final static String ADD_TASK_MISTAKE = ConsoleColor.RED + "Mistake. Full add task command must consist of name, first and last holder name" +
+    private final static String ADD_TASK_MISTAKE = ConsoleColor.RED + "Mistake. Full add task command must consist of name, first and last executor name" +
             ", project name." +
             "\nExample: add task TaskName Ivan Ivanov ProjectName" + ConsoleColor.RESET;
     private final static String ADD_SUCCESS = ConsoleColor.GREEN + "%s's added successfully\n" + ConsoleColor.RESET;
@@ -52,7 +53,7 @@ public class AddCommand implements Command {
             if (commandArray.length == 6)
                 addTask(commandArray);
             else System.out.println(ADD_TASK_MISTAKE);
-        } else System.out.println("Subject is not found");
+        } else System.out.printf(NOT_FOUND1.getMessage(), "Subject");
     }
 
     private void addUser(String[] commandArray) {
@@ -68,22 +69,5 @@ public class AddCommand implements Command {
     private void addTask(String[] commandArray) {
         taskController.create(commandArray[2], commandArray[3], commandArray[4], commandArray[5]);
         System.out.printf(ADD_SUCCESS, TASK.getSubject());
-
-
-        //        System.out.println("Do you want choose executor now? Y/N");
-//        Scanner scanner = new Scanner(System.in);
-//        String answer = scanner.nextLine();
-//        if(answer.equalsIgnoreCase("Y")) {
-//            AssignCommand assignCommand = new AssignCommand(userController, projectController, taskController);
-//            boolean flag = true;
-//            while (flag) {
-//                System.out.println("Assign executor!");
-//                String assign = scanner.nextLine();
-//                if (assign.equalsIgnoreCase("exit"))
-//                    flag = false;
-//
-//                //TODO LOOP!
-//            }
-//        } else System.out.println("You can do it later.");
     }
 }

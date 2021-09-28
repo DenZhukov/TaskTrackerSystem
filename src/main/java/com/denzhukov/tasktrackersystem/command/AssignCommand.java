@@ -6,8 +6,10 @@ import com.denzhukov.tasktrackersystem.controller.UserController;
 import com.denzhukov.tasktrackersystem.repository.entity.Project;
 import com.denzhukov.tasktrackersystem.repository.entity.Task;
 import com.denzhukov.tasktrackersystem.repository.entity.User;
+import com.pi4j.util.ConsoleColor;
 
 import static com.denzhukov.tasktrackersystem.command.CommandName.ASSIGN;
+import static com.denzhukov.tasktrackersystem.console.Messages.*;
 import static com.denzhukov.tasktrackersystem.console.Subject.PROJECT;
 import static com.denzhukov.tasktrackersystem.console.Subject.TASK;
 
@@ -16,11 +18,10 @@ public class AssignCommand implements Command{
     private final UserController userController;
     private final ProjectController projectController;
 
-    private final static String ASSIGN_MESSAGE = "Please, write full command";
-    private final static String ASSIGN_TASK_MISTAKE = "Assign user on the task command must consist of name task, project name, first and last executor name" +
-             "\nExample: assign task TaskName Ivan Ivanov";
-    private final static String ASSIGN_PROJECT_MISTAKE = "Assign user on the project command must consist of name project, first and last executor name" +
-            "\nExample: assign project ProjectName Ivan Ivanov";
+    private final static String ASSIGN_TASK_MISTAKE = ConsoleColor.RED + "Assign user on the task command must consist of name task, project name, first and last executor name" +
+             "\nExample: assign task ProjectName TaskName Ivan Ivanov" + ConsoleColor.RESET;
+    private final static String ASSIGN_PROJECT_MISTAKE = ConsoleColor.RED + "Assign user on the project command must consist of name project, first and last executor name" +
+            "\nExample: assign project ProjectName Ivan Ivanov" + ConsoleColor.RESET;
 
 
     public AssignCommand(UserController userController, ProjectController projectController, TaskController taskController) {
@@ -32,14 +33,14 @@ public class AssignCommand implements Command{
     @Override
     public void execute(String command) {
         if (command.equalsIgnoreCase(ASSIGN.getCommandName())) {
-            System.out.println(ASSIGN_MESSAGE);
+            System.out.println(FULL_COMMAND.getMessage());
             return;
         }
         String[] arrayTask = command.split(" ");
-        chooseObject(arrayTask);
+        chooseSubject(arrayTask);
     }
 
-    private void chooseObject(String[] commandArray) {
+    private void chooseSubject(String[] commandArray) {
        if (commandArray[1].equalsIgnoreCase(PROJECT.getSubject())) {
            if (commandArray.length == 5) {
                assignProject(commandArray);
@@ -48,37 +49,26 @@ public class AssignCommand implements Command{
            if (commandArray.length == 6) {
                assignTask(commandArray);
            } else System.out.println(ASSIGN_TASK_MISTAKE);
-       } else System.out.println("Subject is not found");
+       } else System.out.printf(NOT_FOUND1.getMessage(), commandArray[1]);
     }
-//TODO REFACTOR
+
     private void assignTask(String[] arrayTask) {
-        Task task = taskController.showTask().stream()
-                .filter(task1 -> task1.getName().equalsIgnoreCase(arrayTask[2]) &&
-                        task1.getProject().getName().equalsIgnoreCase(arrayTask[3]))
-                .findFirst().orElse(null);
-        User user = userController.showUsers().stream()
-                .filter(user1 -> user1.getFirstName().equalsIgnoreCase(arrayTask[4]) && user1.getLastName().equalsIgnoreCase(arrayTask[5]))
-                .findFirst().orElse(null);
+        Task task = taskController.findTask(arrayTask[2], arrayTask[3]);
+        User user = userController.findUser(arrayTask[4], arrayTask[5]);
         if (task != null && user != null) {
             task.setUserExecutor(user);
             taskController.create(task);
-            System.out.println("User was assigned on the task ");
-        } else System.out.println("Task or User don't exist, please check list of users or tasks " +
-                "(command \"show users(or tasks)\").");
+            System.out.printf(ASSIGN_USER.getMessage(), TASK.getSubject());
+        } else System.out.printf(ASSIGN_SUB.getMessage(), TASK.getSubject(), TASK.getSubject(), TASK.getSubject());
     }
 
     private void assignProject(String[] arrayProject) {
-        User user = userController.showUsers().stream()
-                .filter(user1 -> user1.getFirstName().equalsIgnoreCase(arrayProject[3]) && user1.getLastName().equalsIgnoreCase(arrayProject[4]))
-                .findFirst().orElse(null);
-        Project project = projectController.showProjects().stream()
-                .filter(project1 -> project1.getName().equalsIgnoreCase(arrayProject[2]))
-                .findFirst().orElse(null);
+        User user = userController.findUser(arrayProject[3], arrayProject[4]);
+        Project project = projectController.findProject(arrayProject[2]);
         if (user != null && project != null) {
             project.addUser(user);
             projectController.create(project);
-            System.out.println("User was assigned on the project ");
-        } else System.out.println("Project or User don't exist, please check list of users or tasks " +
-                "(command \"show users(or project)\").");
+            System.out.printf(ASSIGN_USER.getMessage(), PROJECT.getSubject());
+        } else System.out.printf(ASSIGN_SUB.getMessage(), PROJECT.getSubject(), PROJECT.getSubject(), PROJECT.getSubject());
     }
 }

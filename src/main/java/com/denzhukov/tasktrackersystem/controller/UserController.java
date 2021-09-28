@@ -29,6 +29,10 @@ public class UserController {
         userService.create(firstName, lastName);
     }
 
+    public User findUser(String firstName, String lastName) {
+        return userService.findUser(firstName, lastName);
+    }
+
     public void delete(User user) {
         userService.delete(user);
     }

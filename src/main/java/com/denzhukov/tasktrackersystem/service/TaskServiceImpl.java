@@ -28,10 +28,16 @@ public class TaskServiceImpl implements TaskService{
     }
 
     @Override
+    public Task findTask(String taskName, String projectName) {
+        return show().stream()
+                .filter(task1 -> task1.getName().equalsIgnoreCase(taskName) &&
+                        task1.getProject().getName().equalsIgnoreCase(projectName))
+                .findFirst().orElse(null);
+    }
+
+    @Override
     public void create(String taskName, String fistNameUser, String lastNameUser, String projectName) {
-        User userHolder = userService.show().stream()
-                .filter(user -> (user.getFirstName() + " " + user.getLastName()).equalsIgnoreCase(fistNameUser + " " + lastNameUser))
-                .findAny().orElse(null);
+        User userHolder = userService.findUser(fistNameUser, lastNameUser);
         Project project = projectService.show().stream()
                 .filter(project1 -> project1.getName().equalsIgnoreCase(projectName))
                 .findAny().orElse(null);
@@ -39,10 +45,10 @@ public class TaskServiceImpl implements TaskService{
             Task task = new Task();
             task.setId(setTaskID());
             task.setName(taskName);
-            task.setUserHolder(userHolder);
+            task.setUserExecutor(userHolder);
             task.setProject(project);
             project.addTask(task);
-            userHolder.addTaskHolder(task);
+            userHolder.addTaskExecutor(task);
             taskRepository.save(task);
         } else System.out.println(ConsoleColor.RED + "User or Project don't exist, please check list of users or project " +
                 "(command \"show users(project)\")." + ConsoleColor.RESET);
@@ -57,7 +63,6 @@ public class TaskServiceImpl implements TaskService{
     public List<Task> show() {
         return taskRepository.findAll();
     }
-
 
     private int setTaskID() {
         List<Task> tasks = show();
