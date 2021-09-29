@@ -11,7 +11,9 @@ public class HelpCommand implements Command{
                 "\n\t\t He can be assigned to several projects, tasks" +
                 "\n\tproject - project must have name(one word)." +
                 "\n\t\t It can consist of several tasks and have users" +
-                "\n\ttask - task must have name(one word) and executor, belong to one project");
+                "\n\ttask - task must have name(one word) and executor, belong to one project" +
+                "\n\t\tevery task can have (and be) subtask and have deadline;" +
+                "\n\t\ttask would closed(deleted) if remaining time for a task was 0 day and all of its subtasks are closed");
         System.out.print(LINE.getMessage() + LINE.getMessage());
         System.out.println("\nAvailable commands:" +
                 "\n\tadd - you can add user, project and task" +
@@ -27,6 +29,12 @@ public class HelpCommand implements Command{
                         LINE.getMessage() + LINE.getMessage() +
                 "\n\treport - generate the report of all tasks created for specified Projects by specified User" +
                 "\n\t\t Example: report TrackerSystem Ivan Ivanov\n" +
+                        LINE.getMessage() + LINE.getMessage() +
+                "\n\tdeadline - set deadline for tasks. Strong date format: dd.MM.yyyy" +
+                "\n\t\tExample: deadline taskName projectName 31.12.2021\n" +
+                "\n\tremain - show remaining days for task and its subtask" +
+                "\n\t\tExample: remain taskName projectName" +
+                "\n\t\tYou could see all tasks with deadline just write \"remain\"" +
                         LINE.getMessage() + LINE.getMessage() +
                 "\n\tdelete - delete subject (user, project, task). Example: delete user Ivan Ivanov" +
                 "\n\t\t Attention! If you delete project or user you will lose all assigned tasks\n" +

@@ -65,9 +65,7 @@ public class TaskServiceImpl implements TaskService{
                         && Objects.equals(subtask.getProject(), task.getProject())).collect(Collectors.toList());
     }
 
-
-
-
+    //delete a task and its subtask
     @Override
     public void delete(Task task) {
         List<Task> deleteList = findSubTasks(task);
@@ -83,14 +81,7 @@ public class TaskServiceImpl implements TaskService{
         return taskRepository.findAll();
     }
 
-    private int setTaskID() {
-        List<Task> tasks = show();
-        int size = tasks.size();
-        if(size == 0)
-            return 1;
-        else return tasks.stream().skip(tasks.size() - 1).findAny().get().getId() + 1;
-    }
-
+    //for overloaded methods create(Task)
     private Task createShortVersion(String taskName, String fistNameUser, String lastNameUser, String projectName) {
         User userHolder = userService.findUser(fistNameUser, lastNameUser);
         Project project = projectService.show().stream()
@@ -98,7 +89,6 @@ public class TaskServiceImpl implements TaskService{
                 .findAny().orElse(null);
         if (userHolder != null && project != null) {
             Task task = new Task();
-            task.setId(setTaskID());
             task.setName(taskName);
             task.setUserExecutor(userHolder);
             task.setProject(project);
