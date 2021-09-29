@@ -49,8 +49,7 @@ public class DeleteCommand implements Command {
 
     private void deleteUser(String[] arrayCommand) {
         User userDelete = userController.findUser(arrayCommand[2], arrayCommand[3]);
-        if(userDelete != null){
-            //TODO delete
+        if(userDelete != null) {
             userController.delete(userDelete);
             System.out.printf(DELETE_MESSAGE_SUCCESS, USER.getSubject());
         } else {
@@ -60,8 +59,7 @@ public class DeleteCommand implements Command {
 
     private void deleteProject(String[] arrayCommand) {
         Project projectDelete = projectController.findProject(arrayCommand[2]);
-        if(projectDelete != null){
-
+        if(projectDelete != null) {
             projectController.delete(projectDelete);
             System.out.printf(DELETE_MESSAGE_SUCCESS, PROJECT.getSubject());
         } else {

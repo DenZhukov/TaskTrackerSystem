@@ -7,17 +7,17 @@ project,TrackerSystem
 project,AnalysisSystem
 project,AccountSystem
 
-task,POC,Anna Ivanova,TrackerSystem
-task,Prototype,Anna Ivanova,TrackerSystem,POC,25.10.2021
-task,MVP,Anna Ivanova,TrackerSystem,POC,28.09.2021
-task,Test,Anna Ivanova,TrackerSystem,POC,25.10.2021
+task,MVP,Anna Ivanova,TrackerSystem
+task,Plan,Anna Ivanova,TrackerSystem,MVP,25.09.2021
+task,Prototype,Anna Ivanova,TrackerSystem,MVP,28.09.2021
+task,Test,Anna Ivanova,TrackerSystem,Prototype,25.09.2021
 
-task,POC,Ivan Ivanov,AnalysisSystem
-task,Prototype,Ivan Ivanov,AnalysisSystem,POC,25.10.2021
-task,MVP,Ivan Ivanov,AnalysisSystem,Prototype,25.10.2021
-task,Test,Ivan Ivanov,AnalysisSystem
+task,MVP,Ivan Ivanov,AnalysisSystem
+task,Plan,Ivan Ivanov,AnalysisSystem,MVP,25.10.2021
+task,Prototype,Ivan Ivanov,AnalysisSystem,MVP,25.10.2021
+task,Test,Ivan Ivanov,AnalysisSystem,Prototype,25.11.2021
 
-task,POC,Denis Zhukov,AccountSystem
-task,Prototype,Denis Zhukov,AccountSystem
 task,MVP,Denis Zhukov,AccountSystem
-task,Test,Denis Zhukov,AccountSystem
+task,Plan,Denis Zhukov,AccountSystem,MVP,25.10.2021
+task,Prototype,Denis Zhukov,AccountSystem,MVP,25.10.2021
+task,Test,Denis Zhukov,AccountSystem,Prototype,25.11.2021

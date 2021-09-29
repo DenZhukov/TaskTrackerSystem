@@ -13,6 +13,8 @@ public interface TaskService {
     Task create(String taskName, String fistNameUser, String lastNameUser, String projectName,
                 String taskParentName, Date deadLine);
 
+    List<Task> findSubTasks (Task task);
+
     void delete(Task task);
 
     List<Task> show();

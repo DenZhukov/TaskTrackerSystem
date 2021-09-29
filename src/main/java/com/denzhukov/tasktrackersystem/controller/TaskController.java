@@ -29,6 +29,10 @@ public class TaskController {
     public Task create(String taskName, String fistNameUser, String lastNameUser, String projectName, String taskParentName, Date deadLine) {
         return taskService.create(taskName, fistNameUser, lastNameUser, projectName, taskParentName, deadLine); }
 
+    public List<Task> findSubTasks(Task task) {
+        return taskService.findSubTasks(task);
+    }
+
     public void delete(Task task) {
         taskService.delete(task);
     }

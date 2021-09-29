@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Service
 public class TaskServiceImpl implements TaskService{
@@ -58,7 +60,21 @@ public class TaskServiceImpl implements TaskService{
     }
 
     @Override
+    public List<Task> findSubTasks(Task task) {
+        return show().stream().filter(subtask -> Objects.equals(subtask.getParentTask(), task.getName())
+                        && Objects.equals(subtask.getProject(), task.getProject())).collect(Collectors.toList());
+    }
+
+
+
+
+    @Override
     public void delete(Task task) {
+        List<Task> deleteList = findSubTasks(task);
+        while (findSubTasks(task).size() > 0) {
+            deleteList.forEach(this::delete);
+        }
+        taskRepository.deleteAll(findSubTasks(task));
         taskRepository.delete(task);
     }
 

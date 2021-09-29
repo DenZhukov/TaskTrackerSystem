@@ -5,7 +5,10 @@ import com.denzhukov.tasktrackersystem.controller.TaskController;
 import com.denzhukov.tasktrackersystem.controller.UserController;
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvValidationException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -17,11 +20,13 @@ import java.util.Locale;
 
 import static com.denzhukov.tasktrackersystem.console.Subject.*;
 
+@Component
 public class InputStart {
     private final UserController userController;
     private final ProjectController projectController;
     private final TaskController taskController;
 
+    @Autowired
     public InputStart(UserController userController, ProjectController projectController, TaskController taskController) {
         this.userController = userController;
         this.projectController = projectController;
@@ -31,6 +36,7 @@ public class InputStart {
     private final String PATH = "\\src\\main\\resources\\files\\";
     private final String FILE = "start.csv";
 
+    @PostConstruct
     public void start() {
         try (CSVReader reader = new CSVReader(new FileReader(getPath()))) {
             String[] record;
