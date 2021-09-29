@@ -3,7 +3,12 @@ package com.denzhukov.tasktrackersystem.command;
 import com.denzhukov.tasktrackersystem.controller.ProjectController;
 import com.denzhukov.tasktrackersystem.controller.TaskController;
 import com.denzhukov.tasktrackersystem.controller.UserController;
+import com.denzhukov.tasktrackersystem.repository.entity.Task;
 import com.pi4j.util.ConsoleColor;
+
+import java.util.List;
+import java.util.Scanner;
+import java.util.stream.Collectors;
 
 import static com.denzhukov.tasktrackersystem.command.CommandName.ADD;
 import static com.denzhukov.tasktrackersystem.console.Messages.FULL_COMMAND;
@@ -67,7 +72,40 @@ public class AddCommand implements Command {
     }
 
     private void addTask(String[] commandArray) {
-        taskController.create(commandArray[2], commandArray[3], commandArray[4], commandArray[5]);
-        System.out.printf(ADD_SUCCESS, TASK.getSubject());
+        Task task = taskController.create(commandArray[2], commandArray[3], commandArray[4], commandArray[5]);
+            if (task != null) {
+                System.out.printf(ADD_SUCCESS, TASK.getSubject());
+                System.out.println(taskController.findTask(commandArray[2], commandArray[5]));
+
+                System.out.println("Is it subtask? Y/N");
+                Scanner scanner = new Scanner(System.in);
+                String answer = scanner.nextLine();
+                if (answer.equalsIgnoreCase("Y")) {
+                    createSubtask(task, scanner);
+                }
+            }
+        }
+
+    private void createSubtask (Task task, Scanner scanner) {
+        System.out.println("Please, choose the parent task");
+        List<Task> parents = taskController.showTask().stream()
+                .filter(parent -> parent.getProject().getName().equalsIgnoreCase(task.getProject().getName()))
+                .collect(Collectors.toList());
+        parents.forEach(System.out :: println);
+        boolean flag = true;
+        while (flag) {
+            String taskParent = scanner.nextLine();
+            if (parents.stream().anyMatch(task1 -> task1.getName().equals(taskParent))) {
+                task.setParentTask(taskParent);
+                taskController.create(task);
+                System.out.println("Subtask's created");
+                flag = false;
+            } else if (taskParent.equals("exit")) {
+                flag = false;
+            } else {
+                System.out.printf(NOT_FOUND1.getMessage(), TASK.getSubject());
+                System.out.println("Write exit if you change your mind");
+            }
+        }
     }
 }

@@ -4,6 +4,7 @@ import com.denzhukov.tasktrackersystem.repository.entity.Task;
 import com.denzhukov.tasktrackersystem.service.TaskService;
 import org.springframework.stereotype.Controller;
 
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -22,8 +23,11 @@ public class TaskController {
         taskService.create(task);
     }
 
-    public void create(String taskName, String fistNameUser, String lastNameUser, String projectName) {
-        taskService.create(taskName, fistNameUser, lastNameUser, projectName); }
+    public Task create(String taskName, String fistNameUser, String lastNameUser, String projectName) {
+       return taskService.create(taskName, fistNameUser, lastNameUser, projectName); }
+
+    public Task create(String taskName, String fistNameUser, String lastNameUser, String projectName, String taskParentName, Date deadLine) {
+        return taskService.create(taskName, fistNameUser, lastNameUser, projectName, taskParentName, deadLine); }
 
     public void delete(Task task) {
         taskService.delete(task);

@@ -23,6 +23,8 @@ public class CommandContainer {
         commandMap.put(ASSIGN.getCommandName(), new AssignCommand(userController, projectController, taskController));
         commandMap.put(REPORT.getCommandName(), new ReportCommand(userController, projectController, taskController));
         commandMap.put(HELP.getCommandName(), new HelpCommand());
+        commandMap.put(SET.getCommandName(), new SetDeadline(taskController));
+        commandMap.put(REMAIN.getCommandName(), new RemainTimeCommand(taskController));
         unknownCommand = new UnknownCommand();
     }
 

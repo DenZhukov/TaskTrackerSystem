@@ -10,6 +10,10 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 import static com.denzhukov.tasktrackersystem.console.Subject.*;
 
@@ -38,8 +42,19 @@ public class InputStart {
                     projectController.create(record[1]);
 
                 if (record[0].equalsIgnoreCase(TASK.getSubject()))
+                    if(record.length == 4)
                     taskController.create(record[1],record[2].split(" ")[0],
                             record[2].split(" ")[1], record[3]);
+                    if (record.length == 6) {
+                        SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy", Locale.ENGLISH);
+                        try {
+                            Date deadLine = formatter.parse(record[5]);
+                            taskController.create(record[1], record[2].split(" ")[0],
+                                    record[2].split(" ")[1], record[3], record[4], deadLine);
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                    }
             }
         } catch (IOException | CsvValidationException e) {
             e.printStackTrace();

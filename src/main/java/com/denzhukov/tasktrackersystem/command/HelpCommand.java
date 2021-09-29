@@ -21,7 +21,7 @@ public class HelpCommand implements Command{
                         LINE.getMessage() + LINE.getMessage() +
                 "\n\tshow - show available users, projects, tasks. Example: show users(projects, tasks)\n" +
                         LINE.getMessage() + LINE.getMessage() +
-                "\n\tassign - assign user on the projects or tashelpks." +
+                "\n\tassign - assign user on the projects or tasks." +
                 "\n\t\t assign project projectName firstNameExecutor lastNameExecutor. Example: assign project TrackerSystem Ivan Ivanov" +
                 "\n\t\t assign task taskName projectName firstNameExecutor lastNameExecutor. Example: assign task MVP TrackerSystem Ivan Ivanov\n" +
                         LINE.getMessage() + LINE.getMessage() +

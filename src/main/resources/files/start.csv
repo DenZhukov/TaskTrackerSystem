@@ -8,13 +8,13 @@ project,AnalysisSystem
 project,AccountSystem
 
 task,POC,Anna Ivanova,TrackerSystem
-task,Prototype,Anna Ivanova,TrackerSystem
-task,MVP,Anna Ivanova,TrackerSystem
-task,Test,Anna Ivanova,TrackerSystem
+task,Prototype,Anna Ivanova,TrackerSystem,POC,25.10.2021
+task,MVP,Anna Ivanova,TrackerSystem,POC,28.09.2021
+task,Test,Anna Ivanova,TrackerSystem,POC,25.10.2021
 
 task,POC,Ivan Ivanov,AnalysisSystem
-task,Prototype,Ivan Ivanov,AnalysisSystem
-task,MVP,Ivan Ivanov,AnalysisSystem
+task,Prototype,Ivan Ivanov,AnalysisSystem,POC,25.10.2021
+task,MVP,Ivan Ivanov,AnalysisSystem,Prototype,25.10.2021
 task,Test,Ivan Ivanov,AnalysisSystem
 
 task,POC,Denis Zhukov,AccountSystem

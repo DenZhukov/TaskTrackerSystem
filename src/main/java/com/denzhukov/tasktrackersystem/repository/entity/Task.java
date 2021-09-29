@@ -5,6 +5,7 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Data
 @Entity
@@ -28,6 +29,12 @@ public class Task {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Project project;
 
+    @Column(name = "parentTask")
+    private String parentTask;
+
+    @Column(name = "deadline")
+    private Date deadLine;
+
     @Override
     public String toString() {
         return id + ". " + name +
@@ -39,5 +46,4 @@ public class Task {
             return userExecutor.getFirstName() + " " + userExecutor.getLastName();
         return "Executor has not been appointed yet";
     }
-
 }
