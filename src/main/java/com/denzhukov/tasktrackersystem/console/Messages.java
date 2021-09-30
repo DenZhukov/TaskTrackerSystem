@@ -3,7 +3,9 @@ package com.denzhukov.tasktrackersystem.console;
 import com.pi4j.util.ConsoleColor;
 
 public enum Messages {
-    WELCOME("\t\tWelcome to the TaskTrackerSystem!"),
+    WELCOME("\t\tWelcome to the TaskTrackerSystem!\n" +
+            "You can create users, projects and tasks. Assign users to projects and tasks.\nAnd much more!" +
+            " Write " + ConsoleColor.GREEN +"help" + ConsoleColor.RESET +" if you want to know more!"),
     NOT_FOUND(ConsoleColor.RED + "%s or %s are not found" + ConsoleColor.RESET),
     NOT_FOUND1(ConsoleColor.RED + "%s is not found\n" + ConsoleColor.RESET),
     ASSIGN_SUB(ConsoleColor.RED + "%s or User don't exist, please check list of users or %s\n" +

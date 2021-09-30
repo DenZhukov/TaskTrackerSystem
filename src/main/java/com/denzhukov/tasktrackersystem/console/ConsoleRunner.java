@@ -1,7 +1,6 @@
 package com.denzhukov.tasktrackersystem.console;
 
 import com.denzhukov.tasktrackersystem.command.CommandContainer;
-import com.pi4j.util.ConsoleColor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -17,18 +16,14 @@ public class ConsoleRunner implements CommandLineRunner {
 
     private final CommandContainer commandContainer;
 
-
     @Autowired
     public ConsoleRunner(CommandContainer commandContainer) {
         this.commandContainer = commandContainer;
     }
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
         System.out.println(WELCOME.getMessage());
-        System.out.println("You can create users, projects and tasks. Assign users to projects and tasks.\nAnd much more!" +
-               " Write " + ConsoleColor.GREEN +"help" + ConsoleColor.RESET +" if you want to know more!");
-
 
         try(BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
             String command = "";

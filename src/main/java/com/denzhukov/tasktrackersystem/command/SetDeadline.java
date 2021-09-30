@@ -34,7 +34,6 @@ public class SetDeadline implements Command{
             String dateStr = commandArray[3];
             SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy", Locale.ENGLISH);
             try {
-                //TODO check date
                 Date deadLine = formatter.parse(dateStr);
                 task.setDeadLine(deadLine);
                 taskController.create(task);

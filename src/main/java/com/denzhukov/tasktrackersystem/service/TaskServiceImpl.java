@@ -84,17 +84,17 @@ public class TaskServiceImpl implements TaskService{
 
     //for overloaded methods create(Task)
     private Task createShortVersion(String taskName, String fistNameUser, String lastNameUser, String projectName) {
-        User userHolder = userService.findUser(fistNameUser, lastNameUser);
+        User user = userService.findUser(fistNameUser, lastNameUser);
         Project project = projectService.show().stream()
                 .filter(project1 -> project1.getName().equalsIgnoreCase(projectName))
                 .findAny().orElse(null);
-        if (userHolder != null && project != null) {
+        if (user != null && project != null) {
             Task task = new Task();
             task.setName(taskName);
-            task.setUserExecutor(userHolder);
+            task.setUserExecutor(user);
             task.setProject(project);
             project.addTask(task);
-            userHolder.addTaskExecutor(task);
+            user.addTaskExecutor(task);
             return task;
         } else System.out.println(ConsoleColor.RED + "User or Project don't exist, please check list of users or project " +
                 "(command \"show users(project)\")." + ConsoleColor.RESET);
