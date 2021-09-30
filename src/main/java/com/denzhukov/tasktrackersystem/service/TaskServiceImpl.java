@@ -7,6 +7,7 @@ import com.denzhukov.tasktrackersystem.repository.entity.User;
 import com.pi4j.util.ConsoleColor;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -98,5 +99,28 @@ public class TaskServiceImpl implements TaskService{
         } else System.out.println(ConsoleColor.RED + "User or Project don't exist, please check list of users or project " +
                 "(command \"show users(project)\")." + ConsoleColor.RESET);
         return null;
+    }
+
+    //create special print format for tasks
+    @Override
+    public void printTasks(List<Task> tasks) {
+        System.out.format("%-2s|%-10s|%-15s|%-7s%-10s|%-25s\n", "Id", "Name", "Project", "User", "Executor", "Deadline");
+        SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
+        for (Task task : tasks) {
+            Date deadline = task.getDeadLine();
+            if (deadline != null) {
+                printAndCheckDeadline(task.getId(), task.getName(), task.getProject().getName(),
+                        task.getUserExecutor().getFirstName(), task.getUserExecutor().getLastName(),
+                        format.format(deadline));
+            } else printAndCheckDeadline(task.getId(), task.getName(), task.getProject().getName(),
+                    task.getUserExecutor().getFirstName(), task.getUserExecutor().getLastName(),
+                    "deadline was not set");
+        }
+    }
+
+    private void printAndCheckDeadline(Integer id, String taskName, String projectName, String firstName,
+                                       String lastName, String deadline) {
+        System.out.format("%-2d|%-10s|%-15s|%-7s%-10s|%-25s\n",
+                id, taskName, projectName, firstName, lastName, deadline);
     }
 }

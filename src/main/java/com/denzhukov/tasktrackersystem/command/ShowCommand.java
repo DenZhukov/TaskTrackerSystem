@@ -12,7 +12,7 @@ public class ShowCommand implements Command {
     private final ProjectController projectController;
     private final TaskController taskController;
 
-    private final static String SHOW_MESSAGE = "List of %s:\n";
+    private final static String SHOW_MESSAGE = "\nList of %s:\n";
 
     public ShowCommand(UserController userController, ProjectController projectController, TaskController taskController) {
         this.userController = userController;
@@ -35,11 +35,11 @@ public class ShowCommand implements Command {
             case "projects" : projectController.showProjects()
                     .forEach(System.out :: println);
             break;
-            case "tasks" : taskController.showTask()
-                    .forEach(System.out :: println);
+            case "tasks" : taskController.printTasks(taskController.showTask());
             break;
             default: System.out.println("Incorrect request, you can choose users, projects, tasks");
             break;
         }
     }
 }
+

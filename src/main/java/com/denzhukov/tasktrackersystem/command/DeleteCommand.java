@@ -8,6 +8,7 @@ import com.denzhukov.tasktrackersystem.repository.entity.Task;
 import com.denzhukov.tasktrackersystem.repository.entity.User;
 import com.pi4j.util.ConsoleColor;
 
+import static com.denzhukov.tasktrackersystem.command.CommandName.DELETE;
 import static com.denzhukov.tasktrackersystem.console.Messages.FULL_COMMAND;
 import static com.denzhukov.tasktrackersystem.console.Messages.NOT_FOUND1;
 import static com.denzhukov.tasktrackersystem.console.Subject.*;
@@ -27,10 +28,15 @@ public class DeleteCommand implements Command {
 
     @Override
     public void execute(String command) {
+        if (command.equalsIgnoreCase(DELETE.getCommandName())) {
+            System.out.println(FULL_COMMAND.getMessage());
+            return;
+        }
         String[] arrayCommand = command.split(" ");
         chooseDeleteSubject(arrayCommand);
     }
 
+    //it's my shame..
     private void chooseDeleteSubject(String[] arrayCommand){
         if (arrayCommand[1].equalsIgnoreCase(USER.getSubject()))
             if (arrayCommand.length == 4)

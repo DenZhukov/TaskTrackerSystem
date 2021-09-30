@@ -20,4 +20,6 @@ public interface TaskService {
     List<Task> show();
 
     Task findTask(String taskName, String projectName);
+
+    void printTasks(List<Task> tasks);
 }

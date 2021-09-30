@@ -41,4 +41,8 @@ public class TaskController {
         return taskService.findTask(taskName, projectName);
     }
 
+    public void printTasks(List<Task> tasks) {
+        taskService.printTasks(tasks);
+    }
+
 }

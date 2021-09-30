@@ -15,6 +15,7 @@
     <description>TaskTrackerSystem</description>
     <properties>
         <java.version>11</java.version>
+        <exec.mainClass>com.denzhukov.tasktrackersystem.TaskTrackerSystemApplication</exec.mainClass>
     </properties>
     <dependencies>
         <dependency>
@@ -75,5 +76,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>

@@ -9,7 +9,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-import static com.denzhukov.tasktrackersystem.command.CommandName.SET;
 import static com.denzhukov.tasktrackersystem.console.Messages.FULL_COMMAND;
 import static com.denzhukov.tasktrackersystem.console.Messages.NOT_FOUND1;
 import static com.denzhukov.tasktrackersystem.console.Subject.TASK;
@@ -24,13 +23,12 @@ public class SetDeadline implements Command{
 
     @Override
     public void execute(String command) {
-        if (command.equalsIgnoreCase(SET.getCommandName())) {
-            System.out.println(FULL_COMMAND.getMessage());
+        String[] commandArray = command.split(" ");
+        if (commandArray.length != 4) {
+            System.out.println(FULL_COMMAND.getMessage() +
+            ConsoleColor.YELLOW + "\nExample: deadline taskName projectName 31.12.2021\n" + ConsoleColor.RESET);
             return;
         }
-        String[] commandArray = command.split(" ");
-        if (commandArray.length != 4)
-            return;
         Task task = taskController.findTask(commandArray[1], commandArray[2]);
         if (task != null) {
             String dateStr = commandArray[3];

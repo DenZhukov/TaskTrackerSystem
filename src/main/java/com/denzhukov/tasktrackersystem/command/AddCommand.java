@@ -21,12 +21,12 @@ public class AddCommand implements Command {
     private final TaskController taskController;
 
     private final static String ADD_USER_MISTAKE = ConsoleColor.RED + "Mistake. Full user's name must consist of first and last name." +
-            "\nExample: add user Ivan Ivanov" + ConsoleColor.RESET;
+            "\nExample: add user Ivan Ivanov\n" + ConsoleColor.RESET;
     private final static String ADD_USER_PROJECT = ConsoleColor.RED + "Mistake. Project's name must consist of name." +
-            "\nExample: add project Tracker" + ConsoleColor.RESET;
+            "\nExample: add project Tracker\n" + ConsoleColor.RESET;
     private final static String ADD_TASK_MISTAKE = ConsoleColor.RED + "Mistake. Full add task command must consist of name, first and last executor name" +
             ", project name." +
-            "\nExample: add task TaskName Ivan Ivanov ProjectName" + ConsoleColor.RESET;
+            "\nExample: add task TaskName Ivan Ivanov ProjectName\n" + ConsoleColor.RESET;
     private final static String ADD_SUCCESS = ConsoleColor.GREEN + "%s's added successfully\n" + ConsoleColor.RESET;
 
     public AddCommand(UserController userController, ProjectController projectController, TaskController taskController) {
@@ -45,6 +45,7 @@ public class AddCommand implements Command {
         chooseSubject(arrayName);
     }
 
+    //it's my shame..
     private void chooseSubject(String[] commandArray) {
         if (commandArray[1].equalsIgnoreCase(USER.getSubject())) {
             if (commandArray.length == 4)
@@ -81,31 +82,33 @@ public class AddCommand implements Command {
                 Scanner scanner = new Scanner(System.in);
                 String answer = scanner.nextLine();
                 if (answer.equalsIgnoreCase("Y")) {
-                    createSubtask(task, scanner);
+                    setSubtask(task, scanner);
                 }
             }
         }
 
-    private void createSubtask (Task task, Scanner scanner) {
-        System.out.println("Please, choose the parent task");
+    private void setSubtask (Task task, Scanner scanner) {
         List<Task> parents = taskController.showTask().stream()
-                .filter(parent -> parent.getProject().getName().equalsIgnoreCase(task.getProject().getName()))
+                .filter(parent -> parent.getProject().getName().equalsIgnoreCase(task.getProject().getName()) && !parent.equals(task))
                 .collect(Collectors.toList());
-        parents.forEach(System.out :: println);
-        boolean flag = true;
-        while (flag) {
-            String taskParent = scanner.nextLine();
-            if (parents.stream().anyMatch(task1 -> task1.getName().equals(taskParent))) {
-                task.setParentTask(taskParent);
-                taskController.create(task);
-                System.out.println("Subtask's created");
-                flag = false;
-            } else if (taskParent.equals("exit")) {
-                flag = false;
-            } else {
-                System.out.printf(NOT_FOUND1.getMessage(), TASK.getSubject());
-                System.out.println("Write exit if you change your mind");
+        if (parents.size() > 0) {
+            System.out.println("Please, choose the parent task");
+            parents.forEach(System.out::println);
+            boolean flag = true;
+            while (flag) {
+                String taskParent = scanner.nextLine();
+                if (parents.stream().anyMatch(task1 -> task1.getName().equals(taskParent))) {
+                    task.setParentTask(taskParent);
+                    taskController.create(task);
+                    System.out.println(ConsoleColor.GREEN + "Subtask's created" + ConsoleColor.RESET);
+                    flag = false;
+                } else if (taskParent.equals("exit")) {
+                    flag = false;
+                } else {
+                    System.out.printf(NOT_FOUND1.getMessage(), TASK.getSubject());
+                    System.out.println("Write exit if you change your mind");
+                }
             }
-        }
+        } else System.out.println("It's first task in this project\n");
     }
 }

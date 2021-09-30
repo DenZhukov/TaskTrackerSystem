@@ -42,6 +42,7 @@ public class RemainTimeCommand implements Command {
         else System.out.println(FULL_COMMAND.getMessage());
     }
 
+    //for all task with deadline
     private void remainDaysAllTasks() {
         List<Task> list = taskController.showTask().stream()
                 .filter(task -> task.getDeadLine() != null).sorted(new TaskComparator()).collect(Collectors.toList());
@@ -49,6 +50,7 @@ public class RemainTimeCommand implements Command {
                 + " Remain days:" + TaskCheck.remainDays(task.getDeadLine())).forEach(System.out :: println);
     }
 
+    //check deadline subtasks for the task
     private void checkSubTasks (Task task) {
         List<Task> subtasks = taskController.findSubTasks(task).stream()
                 .sorted(new TaskComparator())

@@ -10,7 +10,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-import static com.denzhukov.tasktrackersystem.command.CommandName.EXIT;
 import static com.denzhukov.tasktrackersystem.console.Messages.WELCOME;
 
 @Component
@@ -33,8 +32,9 @@ public class ConsoleRunner implements CommandLineRunner {
 
         try(BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
             String command = "";
-            while (!command.equalsIgnoreCase(EXIT.getCommandName())) {
+            while (true) {
                 command = reader.readLine();
+                if (command.equals("exit")) System.exit(0);
                 commandContainer.findCommand(command.split(" ")[0]).execute(command);
             }
         }catch(IOException e){

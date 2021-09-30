@@ -8,8 +8,7 @@ public enum CommandName {
     REPORT("report"),
     SET("deadline"),
     REMAIN("remain"),
-    HELP("help"),
-    EXIT("exit");
+    HELP("help");
 
     private final String commandName;
 

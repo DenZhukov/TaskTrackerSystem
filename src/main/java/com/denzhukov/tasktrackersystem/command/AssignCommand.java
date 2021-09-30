@@ -19,7 +19,7 @@ public class AssignCommand implements Command{
     private final ProjectController projectController;
 
     private final static String ASSIGN_TASK_MISTAKE = ConsoleColor.RED + "Assign user on the task command must consist of name task, project name, first and last executor name" +
-             "\nExample: assign task ProjectName TaskName Ivan Ivanov" + ConsoleColor.RESET;
+             "\nExample: assign task TaskName ProjectName Ivan Ivanov" + ConsoleColor.RESET;
     private final static String ASSIGN_PROJECT_MISTAKE = ConsoleColor.RED + "Assign user on the project command must consist of name project, first and last executor name" +
             "\nExample: assign project ProjectName Ivan Ivanov" + ConsoleColor.RESET;
 
